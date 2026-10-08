@@ -1,0 +1,39 @@
+# Labo admin sys : 2 serveurs web Apache derrière un reverse proxy Nginx
+# Seul le proxy est accessible depuis la machine hôte (port 8080).
+
+services:
+  web1:
+    image: httpd:2.4
+    container_name: web1
+    volumes:
+      - ./www/site1:/usr/local/apache2/htdocs
+    networks:
+      - labo
+    restart: unless-stopped
+
+  web2:
+    image: httpd:2.4
+    container_name: web2
+    volumes:
+      - ./www/site2:/usr/local/apache2/htdocs
+    networks:
+      - labo
+    restart: unless-stopped
+
+  proxy:
+    image: nginx:alpine
+    container_name: proxy
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - web1
+      - web2
+    networks:
+      - labo
+    restart: unless-stopped
+
+networks:
+  labo:
+    name: labo
