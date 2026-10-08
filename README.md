@@ -30,7 +30,7 @@ Un **reverse proxy** reçoit toutes les requêtes et les transmet aux serveurs w
 ## Démarrage
 
 ```bash
-git clone <URL_DU_DEPOT>
+git clone [<URL_DU_DEPOT>](https://github.com/TsamD/Lab-web-proxy-docker.git)
 cd labo-web-proxy
 docker compose up -d
 docker compose ps
